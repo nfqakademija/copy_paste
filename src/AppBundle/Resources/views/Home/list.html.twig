@@ -1,11 +1,43 @@
 {% extends '::base.html.twig' %}
 
-{% block body %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {
+            width: 100%;
+        }
+        .cell {
+            max-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        td.buttons {
+            width: 15%;
+        }
+    </style>
 
-    {% for post in posts %}
-        {{ post.title }} <br/>
-        <p>{{ post.content }}</p>
-        <hr/>
-    {% endfor %}
+{% endblock %}
+
+{% block body %}
+    <table class="table table-striped">
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th style="max-width: 100px">Actions</th>
+        </tr>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td class="cell">{{ post.title }}</td>
+                <td class="cell">{{ post.content }}</td>
+                <td class="buttons">
+                    <a href="view/{{ post.id }}" class="btn btn-primary btn-xs" role="button">View</a>
+                    <a href="delete/{{ post.id }}" class="btn btn-danger btn-xs" role="button">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 
 {% endblock %}
