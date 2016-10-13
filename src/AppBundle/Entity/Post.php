@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Post
  *
- * @ORM\Table(name="posts")
- * @ORM\Entity()
+ * @ORM\Table(name="post")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  */
 class Post
 {
@@ -31,14 +31,14 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="string", length=255, nullable=true)
+     * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime", nullable=true)
+     * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
 
@@ -123,6 +123,11 @@ class Post
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
     }
 }
 
