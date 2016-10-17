@@ -42,11 +42,14 @@ class HomeController extends Controller
     {
 
         $postService = $this->get('app.post');
+        $username = $this->getUser()->getUsername();
 
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $post->setCreatedAt(new \DateTime());
+            $post->setCreatedBy($username);
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();

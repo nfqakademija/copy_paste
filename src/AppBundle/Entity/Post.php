@@ -36,6 +36,13 @@ class Post
     private $content;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="createdBy", type="string")
+     */
+    private $createdBy;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
@@ -102,6 +109,33 @@ class Post
     }
 
     /**
+     * Set createdBy
+     *
+     * @param string $createdBy
+     *
+     * @return Post
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->createdBy = $createdBy;
+
+        //seteriai neturi nieko grazinti
+        //return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return string
+     */
+    //geteriam ir seteriam yra phpstorme generuoti alt+insert (man rods, man ant maco kitoks shortcutas)
+    public function getCreatedBy()
+    {
+        //amzinas ciklas
+        return $this->createdBy;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -125,9 +159,5 @@ class Post
         return $this->createdAt;
     }
 
-    public function __construct()
-    {
-        $this->createdAt = new \DateTime();
-    }
 }
 

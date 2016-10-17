@@ -22,11 +22,11 @@ security:
             http_basic: ~
             provider: our_db_provider
             form_login:
-                login_path: login
-                check_path: login
+                login_path: /login
+                check_path: /login
             logout:
-                path: logout
-                target: login
+                path: /logout
+                target: /login
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -35,4 +35,4 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
