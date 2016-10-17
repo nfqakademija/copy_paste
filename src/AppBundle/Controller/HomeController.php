@@ -9,6 +9,7 @@ use AppBundle\Entity\Post;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
+
 class HomeController extends Controller
 {
 

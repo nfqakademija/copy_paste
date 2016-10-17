@@ -1,0 +1,29 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {
+            width: 100%;
+        }
+        .cell {
+            max-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        td.buttons {
+            width: 15%;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endblock %}
