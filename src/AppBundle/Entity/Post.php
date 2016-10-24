@@ -34,14 +34,15 @@ class Post
      * @var string
      *
      * @ORM\Column(name="content", type="text", nullable=true)
+     * @Assert\NotBlank()
      */
     private $content;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="createdBy", type="string")
-     * @Assert\NotBlank()
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $createdBy;
 
@@ -163,4 +164,3 @@ class Post
     }
 
 }
-

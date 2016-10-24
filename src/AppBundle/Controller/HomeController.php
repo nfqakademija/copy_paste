@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function listAction(Request $request)
     {
         $em    = $this->get('doctrine.orm.entity_manager');
-        $dql   = "SELECT a FROM AppBundle:Post a";
+        $dql   = "SELECT a, u FROM AppBundle:Post a JOIN a.createdBy u";
         $query = $em->createQuery($dql);
 
         $paginator  = $this->get('knp_paginator');
@@ -49,7 +49,7 @@ class HomeController extends Controller
     {
 
         $postService = $this->get('app.post');
-        $username = $this->getUser()->getUsername();
+        $username = $this->getUser();
 
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
