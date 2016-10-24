@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Post
@@ -25,6 +26,7 @@ class Post
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -39,6 +41,7 @@ class Post
      * @var string
      *
      * @ORM\Column(name="createdBy", type="string")
+     * @Assert\NotBlank()
      */
     private $createdBy;
 
