@@ -8,7 +8,7 @@
         table {
             width: 100%;
         }
-        .cell {
+        td {
             max-width: 0;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -21,24 +21,31 @@
 {% block body %}
     <table class="table table-striped">
         <tr>
-            <th style="width: 5%">#</th>
-            <th>Title</th>
-            <th>Content</th>
-            <th style="width: 15%">Created By</th>
+            {# sorting of properties based on query components #}
+            <th style="width: 5%">{{ knp_pagination_sortable(pagination, '#', 'a.id') }}</th>
+            <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Title', 'a.title') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Content', 'a.content') }}</th>
+            <th style="width: 15%">{{ knp_pagination_sortable(pagination, 'Created By', 'a.createdBy') }}</th>
             <th style="width: 15%">Actions</th>
         </tr>
-        {% for post in posts %}
+
+        {# table body #}
+        {% for post in pagination %}
             <tr>
-                <td class="cell">{{ post.id }}</td>
-                <td class="cell">{{ post.title }}</td>
-                <td class="cell">{{ post.content }}</td>
-                <td class="cell">{{ post.createdBy }}</td>
-                <td class="cell">
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.content }}</td>
+                <td>{{ post.createdBy }}</td>
+                <td>
                     <a href="view/{{ post.id }}" class="btn btn-primary btn-xs" role="button">View</a>
                     <a href="delete/{{ post.id }}" class="btn btn-danger btn-xs" role="button">Delete</a>
                 </td>
             </tr>
         {% endfor %}
     </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 
 {% endblock %}

@@ -8,6 +8,7 @@ use AppBundle\Form\PostType;
 use AppBundle\Entity\Post;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Faker\ORM\Propel\Populator;
 
 
 class HomeController extends Controller
@@ -24,15 +25,21 @@ class HomeController extends Controller
     /**
      * @Route("/list", name="posts_list")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $postService = $this->get('app.post');
+        $em    = $this->get('doctrine.orm.entity_manager');
+        $dql   = "SELECT a FROM AppBundle:Post a";
+        $query = $em->createQuery($dql);
 
-        $posts = $postService->getAllPosts();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
-        return $this->render('AppBundle:Home:list.html.twig', [
-            'posts' => $posts,
-        ]);
+        // parameters to template
+        return $this->render('AppBundle:Home:list.html.twig', array('pagination' => $pagination));
     }
 
     /**
