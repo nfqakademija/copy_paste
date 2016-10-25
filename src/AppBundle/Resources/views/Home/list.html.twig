@@ -35,7 +35,7 @@
                 <td>{{ post.id }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.content }}</td>
-                <td>{{ post.createdBy }}</td>
+                <td>{{ post.createdBy.username }}</td>
                 <td>
                     <a href="view/{{ post.id }}" class="btn btn-primary btn-xs" role="button">View</a>
                     <a href="delete/{{ post.id }}" class="btn btn-danger btn-xs" role="button">Delete</a>

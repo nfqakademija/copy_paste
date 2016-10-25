@@ -42,7 +42,7 @@ class Post
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *
      */
     private $createdBy;
 

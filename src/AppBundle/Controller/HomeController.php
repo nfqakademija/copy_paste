@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Form\PostType;
@@ -27,15 +28,23 @@ class HomeController extends Controller
      */
     public function listAction(Request $request)
     {
+        /**
+         * @var EntityManager $em
+         */
         $em    = $this->get('doctrine.orm.entity_manager');
+
+        $qb = $em->getRepository(Post::class)->createQueryBuilder("entity");
+
+        $qb->join("entity.createdBy", "user");
+
         $dql   = "SELECT a, u FROM AppBundle:Post a JOIN a.createdBy u";
         $query = $em->createQuery($dql);
 
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $query, /* query NOT result */
+            $qb->getQuery(), /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+            1/*limit per page*/
         );
 
         // parameters to template
