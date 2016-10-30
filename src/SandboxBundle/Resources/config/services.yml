@@ -1,0 +1,23 @@
+services:
+
+
+  app.teddyBearFactory:
+    class: SandboxBundle\Service\TeddyBearFactory
+    arguments: ["@event_dispatcher"]
+
+
+  app.teddyBear:
+    class: SandboxBundle\Service\TeddyBear
+    factory: ["@app.teddyBearFactory", create]
+
+
+  app.event_listener:
+      class: SandboxBundle\Event\EventListener
+      tags:
+        - { name: kernel.event_listener, event: app.pre_create, method: makeChanges }
+
+
+  #app.event_subscriber:
+    #  class: SandboxBundle\Event\EventSubscriber
+    #  tags:
+    #    - { name: kernel.event_subscriber }
