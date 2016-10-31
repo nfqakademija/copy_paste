@@ -11,6 +11,8 @@ namespace SandboxBundle\Service;
 use SandboxBundle\Event\Events;
 use SandboxBundle\Event\PreCreateEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use SandboxBundle\Service\TeddyBearBodyFactory;
+use SandboxBundle\Service\TeddyBearHeadFactory;
 
 class TeddyBearFactory
 {
@@ -18,27 +20,25 @@ class TeddyBearFactory
      * @var EventDispatcher
      */
     private $eventDispatcher;
+    private $teddyBearHeadFactory;
+    private $teddyBearBodyFactory;
 
-    public function __construct($eventDispatcher)
+    public function __construct($eventDispatcher, $teddyBearHeadFactory, $teddyBearBodyFactory)
     {
         $this->eventDispatcher = $eventDispatcher;
+        $this->teddyBearHeadFactory = $teddyBearHeadFactory;
+        $this->teddyBearBodyFactory = $teddyBearBodyFactory;
     }
 
     public function create()
     {
         $teddyBear = new TeddyBear();
-        $teddyBearHead = new TeddyBearHead();
-        $teddyBearHead->setEarCount(2)
-            ->setEyeCount(2)
-            ->setFaceExpression("smiling")
-            ->setNoseShape("pointy");
-        $teddyBearBody = new TeddyBearBody();
-        $teddyBearBody->setArmCount(2)
-            ->setBodyColor("brown")
-            ->setLegCount(2);
+        $teddyBearHead = $this->teddyBearHeadFactory->create();
+        $teddyBearBody = $this->teddyBearBodyFactory->create();
         $teddyBear->setBody($teddyBearBody)
             ->setHead($teddyBearHead);
-        $this->eventDispatcher->dispatch(Events::PRE_CREATE, new PreCreateEvent($teddyBear));
+
+        //$this->eventDispatcher->dispatch(Events::PRE_CREATE, new PreCreateEvent($teddyBear));
 
         return $teddyBear;
     }

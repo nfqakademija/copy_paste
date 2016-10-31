@@ -2,22 +2,32 @@ services:
 
 
   app.teddyBearFactory:
-    class: SandboxBundle\Service\TeddyBearFactory
-    arguments: ["@event_dispatcher"]
+      class: SandboxBundle\Service\TeddyBearFactory
+      arguments: ["@event_dispatcher", "@app.teddyBearHeadFactory", "@app.teddyBearBodyFactory"]
+  app.teddyBearHeadFactory:
+      class: SandboxBundle\Service\TeddyBearHeadFactory
+      arguments: ["@event_dispatcher"]
+  app.teddyBearBodyFactory:
+      class: SandboxBundle\Service\TeddyBearBodyFactory
+      arguments: ["@event_dispatcher"]
 
 
   app.teddyBear:
-    class: SandboxBundle\Service\TeddyBear
-    factory: ["@app.teddyBearFactory", create]
+      class: SandboxBundle\Service\TeddyBear
+      factory: ["@app.teddyBearFactory", create]
+  app.teddyBearHead:
+      class: SandboxBundle\Service\TeddyBearHead
+      factory: ["@app.teddyBearHeadFactory", create]
+  app.teddyBearBody:
+      class: SandboxBundle\Service\TeddyBearBody
+      factory: ["@app.teddyBearBodyFactory", create]
 
 
   app.event_listener:
       class: SandboxBundle\Event\EventListener
       tags:
-        - { name: kernel.event_listener, event: app.pre_create, method: makeChanges }
-
-
-  #app.event_subscriber:
-    #  class: SandboxBundle\Event\EventSubscriber
-    #  tags:
-    #    - { name: kernel.event_subscriber }
+        - { name: kernel.event_listener, event: app.pre_create_body, method: changeBody }
+  app.event_subscriber:
+      class: SandboxBundle\Event\EventSubscriber
+      tags:
+        - { name: kernel.event_subscriber }

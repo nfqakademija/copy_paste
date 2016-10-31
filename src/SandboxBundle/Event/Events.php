@@ -11,5 +11,6 @@ namespace SandboxBundle\Event;
 
 final class Events
 {
-    const PRE_CREATE = 'app.pre_create';
+    const PRE_CREATE_HEAD = 'app.pre_create_head';
+    const PRE_CREATE_BODY = 'app.pre_create_body';
 }

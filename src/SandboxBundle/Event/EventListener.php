@@ -8,14 +8,14 @@
 
 namespace SandboxBundle\Event;
 
-use SandboxBundle\Service\TeddyBear;
+use SandboxBundle\Service\TeddyBearBody;
 
 class EventListener
 {
-    public function makeChanges($event)
+    public function changeBody($event)
     {
-        /** @var TeddyBear $teddyBear */
-        $teddyBear = $event->getTeddyBear();
-        $teddyBear->getBody()->setBodyColor("yellow");
+        /** @var TeddyBearBody $teddyBearBody */
+        $teddyBearBody = $event->getTeddyBearBody();
+        $teddyBearBody->setBodyColor("yellow");
     }
 }
