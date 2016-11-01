@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\Event;
 
 class PreCreateBodyEvent extends Event
 {
-    const NAME = 'app.pre_create_body';
 
     private $teddyBearBody;
 

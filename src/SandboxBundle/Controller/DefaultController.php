@@ -14,6 +14,10 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $teddyBear = $this->get('app.teddyBear');
+        if (!$teddyBear->getHead())
+            throw new \RuntimeException('Teddy does not have a head');
+        else if (!$teddyBear->getBody())
+            throw new \RuntimeException('Teddy does not have a body');
         return $this->render('SandboxBundle:Default:index.html.twig', array("teddyBear" => $teddyBear));
     }
 }

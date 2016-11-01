@@ -12,10 +12,13 @@ use SandboxBundle\Service\TeddyBearBody;
 
 class EventListener
 {
+
+    const TEDDYBEAR_BODY_COLOR = "yellow";
+
     public function changeBody($event)
     {
         /** @var TeddyBearBody $teddyBearBody */
         $teddyBearBody = $event->getTeddyBearBody();
-        $teddyBearBody->setBodyColor("yellow");
+        $teddyBearBody->setBodyColor(self::TEDDYBEAR_BODY_COLOR);
     }
 }

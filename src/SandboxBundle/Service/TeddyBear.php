@@ -17,7 +17,7 @@ class TeddyBear
     private $body;
 
     /**
-     * @return mixed
+     * @return TeddyBearHead
      */
     public function getHead()
     {
@@ -25,17 +25,17 @@ class TeddyBear
     }
 
     /**
-     * @param mixed $head
+     * @param TeddyBearHead $head
      * @return TeddyBear
      */
-    public function setHead($head)
+    public function setHead(TeddyBearHead $head)
     {
         $this->head = $head;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return TeddyBearBody
      */
     public function getBody()
     {
@@ -43,10 +43,10 @@ class TeddyBear
     }
 
     /**
-     * @param mixed $body
+     * @param TeddyBearBody $body
      * @return TeddyBear
      */
-    public function setBody($body)
+    public function setBody(TeddyBearBody $body)
     {
         $this->body = $body;
         return $this;

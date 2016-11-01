@@ -38,8 +38,6 @@ class TeddyBearFactory
         $teddyBear->setBody($teddyBearBody)
             ->setHead($teddyBearHead);
 
-        //$this->eventDispatcher->dispatch(Events::PRE_CREATE, new PreCreateEvent($teddyBear));
-
         return $teddyBear;
     }
 }

@@ -12,7 +12,6 @@ use Symfony\Component\EventDispatcher\Event;
 
 class PreCreateHeadEvent extends Event
 {
-    const NAME = 'app.pre_create_head';
 
     private $teddyBearHead;
 

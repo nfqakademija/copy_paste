@@ -21,6 +21,12 @@ class AppDebugCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $teddyBear = $this->getContainer()->get('app.teddyBear');
+        if (!$teddyBear->getHead())
+            throw new \RuntimeException('Teddy does not have a head');
+        else if (!$teddyBear->getBody())
+            throw new \RuntimeException('Teddy does not have a body');
+
+
         $output->writeln("TeddyBear HEAD: ");
         $output->writeln("TeddyBear has ".$teddyBear->getHead()->getEyeCount().
             " eyes, a ".$teddyBear->getHead()->getNoseShape().
