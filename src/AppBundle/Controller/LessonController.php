@@ -3,6 +3,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Lesson;
 use AppBundle\Exception\LessonException;
+use AppBundle\Form\ResultType;
 use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -65,6 +66,19 @@ class LessonController extends Controller
             $prevLesson = false;
         }
 
+        $formList = [];
+        foreach ($students as $student) {
+            $studentId = $student->getId();
+            $formList[$studentId] = $this->get('form.factory')
+                ->createNamedBuilder("result_".$studentId, ResultType::class, null, array(
+                    'action' => $this->generateUrl('result_new'),
+                    'method' => 'POST',
+                ))
+                ->getForm()
+                ->createView();
+        }
+
+
         return $this->render('AppBundle:Lesson:lesson.html.twig', [
             'title'      => $title,
             'lesson'     => $lesson,
@@ -72,7 +86,8 @@ class LessonController extends Controller
             'prevLesson' => $prevLesson,
             'students'   => $students,
             'activities' => $activities,
-            'results' => $results
+            'results'   => $results,
+            'formList'  => $formList,
         ]);
     }
 
