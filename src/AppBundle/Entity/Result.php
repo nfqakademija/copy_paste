@@ -49,6 +49,21 @@ class Result
      */
     private $studentInfo;
 
+    /**
+     * Result constructor.
+     * @param float $value
+     * @param \DateTime $timestamp
+     * @param Activity $activity
+     * @param StudentInfo $studentInfo
+     */
+    public function __construct($value = null, \DateTime $timestamp = null, Activity $activity = null, StudentInfo $studentInfo = null)
+    {
+        $this->value = $value;
+        $this->timestamp = $timestamp;
+        $this->activity = $activity;
+        $this->studentInfo = $studentInfo;
+    }
+
 
     /**
      * Get id

@@ -3,6 +3,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Lesson;
 use AppBundle\Exception\LessonException;
+use AppBundle\Form\ResultType;
 use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -46,7 +47,12 @@ class LessonController extends Controller
      */
     private function display($lesson, $title)
     {
-        $id = $lesson->getId();
+        $id         = $lesson->getId();
+        $classInfo  = $lesson->getClassInfo();
+
+        $students   = $this->get('app.student_info')->getStudentListByClass($classInfo);
+        $activities = $this->get('app.activity')->getActivityList();
+        $results    = $this->get('app.result')->getLastResultsByClass($classInfo);
 
         try {
             $nextLesson = $this->get('app.lesson_service')->getNext($id);
@@ -60,11 +66,28 @@ class LessonController extends Controller
             $prevLesson = false;
         }
 
+        $formList = [];
+        foreach ($students as $student) {
+            $studentId = $student->getId();
+            $formList[$studentId] = $this->get('form.factory')
+                ->createNamedBuilder("result_".$studentId, ResultType::class, null, array(
+                    'action' => $this->generateUrl('result_new'),
+                    'method' => 'POST',
+                ))
+                ->getForm()
+                ->createView();
+        }
+
+
         return $this->render('AppBundle:Lesson:lesson.html.twig', [
             'title'      => $title,
             'lesson'     => $lesson,
             'nextLesson' => $nextLesson,
-            'prevLesson' => $prevLesson
+            'prevLesson' => $prevLesson,
+            'students'   => $students,
+            'activities' => $activities,
+            'results'   => $results,
+            'formList'  => $formList,
         ]);
     }
 
