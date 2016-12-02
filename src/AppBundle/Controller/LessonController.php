@@ -29,7 +29,7 @@ class LessonController extends Controller
     {
         if (!$Lesson) {
             $this->addFlash('danger', 'Tokia pamoka neegzistuoja!');
-            return $this->redirectToRoute('homepage');
+            return $this->render('@App/Lesson/errors.html.twig');
         }
 
         return $this->display($Lesson, 'Pamoka');
