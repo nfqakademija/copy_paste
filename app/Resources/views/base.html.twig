@@ -30,11 +30,15 @@
 
             <div class="content-wrapper">
                 <section class="content-header">
-                    {{ flash.flashBag() }}
                     <h1>
                         {% block page_title %}Blank page{% endblock %}
                         <small>
                             {% block page_subtitle %}
+                                {% for flash_message in app.session.flashBag.get('danger') %}
+                                    <div class="flash-danger">
+                                        {{ flash_message }}
+                                    </div>
+                                {% endfor %}
                            {% endblock %}
                         </small>
                     </h1>

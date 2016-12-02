@@ -17,7 +17,7 @@ class LessonController extends Controller
             $currentLesson = $this->get('app.lesson_service')->getCurrentLesson();
             return $this->display($currentLesson, 'Dabartinė pamoka');
         } catch (LessonException $e) {
-            $this->addFlash('notice', $e->getMessage());
+            $this->addFlash('danger', $e->getMessage());
             return $this->render('@App/Lesson/errors.html.twig');
         }
     }
