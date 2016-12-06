@@ -21,7 +21,7 @@ class LessonController extends Controller
             $currentLesson = $this->get('app.lesson_service')->getCurrentLesson();
             return $this->display($currentLesson, 'Dabartinė pamoka', $request);
         } catch (LessonException $e) {
-            $this->addFlash('notice', $e->getMessage());
+            $this->addFlash('danger', $e->getMessage());
             return $this->render('@App/Lesson/errors.html.twig');
         }
     }
@@ -33,7 +33,7 @@ class LessonController extends Controller
     {
         if (!$Lesson) {
             $this->addFlash('danger', 'Tokia pamoka neegzistuoja!');
-            return $this->redirectToRoute('homepage');
+            return $this->render('@App/Lesson/errors.html.twig');
         }
 
         return $this->display($Lesson, 'Pamoka', $request);
